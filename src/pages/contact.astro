@@ -1,0 +1,262 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Contact" description="Location of Soft Matter Theory Lab — Kyungpook National University">
+  <div class="page-header">
+    <div class="container">
+      <h1>Contact</h1>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-layout">
+
+        <!-- Left: Location details -->
+        <div class="location-main">
+          <div class="location-card">
+            <div class="location-card-header">
+              <span class="location-icon">🏛</span>
+              <div>
+                <h2>Lab Location</h2>
+                <p class="location-subtitle">Soft Matter Theory Lab @ Kyungpook National University</p>
+              </div>
+            </div>
+
+            <div class="location-details">
+              <div class="detail-row">
+                <div class="detail-label">
+                  <span class="detail-icon">🏢</span>
+                  Building
+                </div>
+                <div class="detail-value">
+                  <strong>미래융합과학관 (Integrated Science Building)</strong>
+                  <span class="detail-sub">College of Natural Sciences</span>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <div class="detail-label">
+                  <span class="detail-icon">👨‍🔬</span>
+                  PI Office
+                </div>
+                <div class="detail-value">
+                  <strong>Room 330</strong>
+                  <span class="detail-sub">3rd Floor — Professor's office</span>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <div class="detail-label">
+                  <span class="detail-icon">🔬</span>
+                  Student Labs
+                </div>
+                <div class="detail-value">
+                  <strong>Rooms 334 & 335</strong>
+                  <span class="detail-sub">3rd Floor — Graduate student research space</span>
+                </div>
+              </div>
+
+              <div class="detail-row">
+                <div class="detail-label">
+                  <span class="detail-icon">📍</span>
+                  Address
+                </div>
+                <div class="detail-value">
+                  <strong>80 Daehak-ro, Buk-gu, Daegu 41566</strong>
+                  <span class="detail-sub">Kyungpook National University, Integrated Science Building</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Map -->
+        <div class="location-sidebar">
+          <div class="map-block">
+            <div class="map-iframe-wrap">
+              <iframe
+                src="https://maps.google.com/maps?q=경북대학교+미래융합과학관,대구&output=embed&hl=en"
+                width="100%"
+                height="300"
+                style="border:0;"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <div class="map-actions">
+              <a
+                href="https://map.naver.com/v5/search/경북대학교+미래융합과학관"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-primary map-btn"
+              >Naver Maps</a>
+              <a
+                href="https://maps.google.com/?q=경북대학교+미래융합과학관+대구"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-outline map-btn"
+              >Google Maps</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .location-card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  .location-card-header {
+    background: var(--color-primary);
+    color: #fff;
+    padding: 1.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .location-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  .location-card-header h2 {
+    color: #fff;
+    margin-bottom: 0.2rem;
+    font-size: 1.4rem;
+  }
+
+  .location-subtitle {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.75);
+    margin: 0;
+  }
+
+  .location-details {
+    padding: 0.5rem 0;
+  }
+
+  .detail-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 1.25rem 2rem;
+    border-bottom: 1px solid var(--color-border);
+    transition: background 0.15s;
+  }
+
+  .detail-row:last-child {
+    border-bottom: none;
+  }
+
+  .detail-row:hover {
+    background: var(--color-bg-alt);
+  }
+
+  .detail-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-top: 0.1rem;
+  }
+
+  .detail-icon {
+    font-size: 1rem;
+  }
+
+  .detail-value {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .detail-value strong {
+    font-size: 0.97rem;
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .detail-sub {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  /* Map */
+  .map-block {
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .map-iframe-wrap {
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .map-iframe-wrap iframe {
+    display: block;
+    width: 100%;
+    height: 300px;
+  }
+
+  .map-actions {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .map-btn {
+    flex: 1;
+    justify-content: center;
+    font-size: 0.85rem;
+    padding: 0.55rem 0.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .detail-row {
+      grid-template-columns: 120px 1fr;
+      padding: 1.1rem 1.25rem;
+    }
+
+    .location-card-header {
+      padding: 1.25rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .detail-row {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+  }
+</style>

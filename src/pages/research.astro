@@ -1,0 +1,332 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const areas = [
+  {
+    id: 'single-molecule',
+    icon: '🧬',
+    title: 'Single Molecule Physics',
+    description: 'We apply statistical mechanics to study the behavior of individual polymer chains and biomolecules. Our work addresses force-extension relations, conformational fluctuations, and the thermodynamics of single-molecule systems.',
+    topics: ['Polymer Elasticity', 'Conformational Fluctuations', 'Worm-Like Chain', 'Freely Jointed Chain', 'Ensemble Inequivalence'],
+    papers: [
+      { label: 'Phys. Rev. E 2026', doi: 'https://doi.org/10.1103/z47b-3zhg' },
+      { label: 'J. Stat. Mech. 2025', doi: 'https://doi.org/10.1088/1742-5468/ade86b' },
+      { label: 'J. Chem. Phys. 2024', doi: 'https://doi.org/10.1063/5.0246283' },
+      { label: 'Phys. Rev. E 2024', doi: 'https://doi.org/10.1103/physreve.110.014501' },
+      { label: 'J. Chem. Phys. 2022', doi: 'https://doi.org/10.1063/5.0112552' },
+    ],
+  },
+  {
+    id: 'polymer-networks',
+    icon: '🕸️',
+    title: 'Polymer Networks',
+    description: 'We develop theoretical frameworks for understanding the structure and mechanics of crosslinked polymer networks, including gels and elastomers. Our approaches connect network topology with macroscopic mechanical response.',
+    topics: ['Crosslinked Polymers', 'Gels', 'Network Topology', 'Rubber Elasticity', 'Deam-Edwards Distribution'],
+    papers: [
+      { label: 'New J. Phys. 2012', doi: 'https://doi.org/10.1088/1367-2630/14/11/115011' },
+      { label: 'Phys. Rev. E 2011', doi: 'https://doi.org/10.1103/physreve.83.021905' },
+      { label: 'Phys. Rev. Lett. 2007', doi: 'https://doi.org/10.1103/physrevlett.99.198301' },
+    ],
+  },
+];
+
+const projects = [
+  {
+    title: 'Novel Aspects of Polymer Physics',
+    funder: 'Ministry of Science and ICT of Korea',
+    period: '2026 – 2030',
+    amount: '',
+  },
+];
+
+const pastProjects = [
+  {
+    title: 'Statistical Mechanics of Looped, Disordered, and Bounded Polymers',
+    funder: 'Ministry of Science and ICT of Korea',
+    period: '2022 – 2024',
+  },
+  {
+    title: 'Statistical Mechanics of Bounded, Hinged, Crosslinked Semi-flexible Polymers',
+    funder: 'Ministry of Science and ICT of Korea',
+    period: '2019 – 2021',
+  },
+];
+---
+
+<BaseLayout title="Research" description="Soft Matter Theory Lab research areas: polymer physics and biological soft matter.">
+  <div class="page-header">
+    <div class="container">
+      <h1>Research</h1>
+      <p>Applications of statistical mechanics to soft matter physics</p>
+    </div>
+  </div>
+
+  <!-- Research Areas -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Focus Areas</span>
+        <h2>Research Areas</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="areas-list">
+        {areas.map(area => (
+          <div class="area-block" id={area.id}>
+            <div class="area-icon">{area.icon}</div>
+            <div class="area-content">
+              <h3>{area.title}</h3>
+              <p>{area.description}</p>
+              <div class="area-topics">
+                {area.topics.map(t => <span class="tag">{t}</span>)}
+              </div>
+              {area.papers.length > 0 && (
+                <div class="area-venues">
+                  <span class="venue-label">Publications:</span>
+                  {area.papers.map((p: { label: string; doi: string }) => (
+                    <a href={p.doi} target="_blank" rel="noopener" class="tag tag-accent paper-tag">{p.label}</a>
+                  ))}
+                </div>
+              )}
+              <a href="/publications" class="area-link">View publications →</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Funded Projects</span>
+        <h2>Current Projects</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="projects-grid">
+        {projects.map(proj => (
+          <div class="project-card card">
+            <div class="project-header">
+              <span class="tag">{proj.period}</span>
+              {proj.amount && <span class="project-amount">{proj.amount}</span>}
+            </div>
+            <h3>{proj.title}</h3>
+            <p class="project-funder">{proj.funder}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Past Projects -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Funded Projects</span>
+        <h2>Past Projects</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="projects-grid">
+        {pastProjects.map(proj => (
+          <div class="project-card card">
+            <div class="project-header">
+              <span class="tag">{proj.period}</span>
+            </div>
+            <h3>{proj.title}</h3>
+            <p class="project-funder">{proj.funder}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .areas-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .area-block {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 2rem;
+    align-items: start;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 2rem 2rem 2rem 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+  }
+
+  .area-block:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .area-icon {
+    font-size: 2.8rem;
+    text-align: center;
+    padding-top: 0.25rem;
+  }
+
+  .area-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+    color: var(--color-primary);
+  }
+
+  .area-content p {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .area-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .area-venues {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .venue-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+  }
+
+  .paper-tag {
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .paper-tag:hover {
+    background: #f5e6e8;
+    color: var(--color-primary);
+  }
+
+.area-link {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-primary-light);
+  }
+
+  .projects-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    width: 380px;
+    max-width: 100%;
+  }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .project-amount {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .project-card h3 {
+    font-size: 1rem;
+    line-height: 1.4;
+    color: var(--color-primary);
+  }
+
+  .project-funder {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .collab-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .collab-group {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  .collab-group h4 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .collab-group ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .collab-group li {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .collab-group li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    .area-block {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .area-icon { text-align: left; }
+    .collab-grid { grid-template-columns: 1fr; }
+  }
+</style>

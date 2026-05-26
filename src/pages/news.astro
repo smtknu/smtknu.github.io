@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { news } from '../data/news';
+
+const categories = ['All', 'Award', 'Publication', 'Event', 'Alumni'];
+---
+
+<BaseLayout title="News" description="Latest news, awards, and announcements from Soft Matter Theory Lab.">
+  <div class="page-header">
+    <div class="container">
+      <h1>News</h1>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container news-container">
+      <!-- Sidebar Filter -->
+      <aside class="news-sidebar">
+        <h4>Category</h4>
+        <ul class="category-list" id="catList">
+          {categories.map((c, i) => (
+            <li>
+              <button class:list={['cat-btn', { active: i === 0 }]} data-cat={c}>{c}</button>
+            </li>
+          ))}
+        </ul>
+      </aside>
+
+      <!-- News Feed -->
+      <div class="news-feed" id="newsFeed">
+        {news.map(item => (
+          <article class="news-item" data-cat={item.tag}>
+            <div class="news-item-meta">
+              <time>{item.date}</time>
+              <span class:list={['tag', {
+                'tag-accent': item.tag === 'Award',
+                'tag-grant': item.tag === 'Grant',
+                'tag-pub': item.tag === 'Publication',
+              }]}>{item.tag}</span>
+            </div>
+            <h3>{item.title}</h3>
+            <p>
+              {item.body}
+              {item.coauthors && <> Coauthors: {item.coauthors.map((a: { name: string; url: string }, i: number) => (
+                <>{i > 0 && ', '}{a.url ? <a href={a.url} target="_blank" rel="noopener" class="news-link">{a.name}</a> : a.name}</>
+              ))}.  </>}
+              {item.link && <>Link: <a href={item.link} target="_blank" rel="noopener" class="news-link">{item.linkText}</a></>}
+            </p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .news-container {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .news-sidebar {
+    position: sticky;
+    top: 88px;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+
+  .news-sidebar h4 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .category-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .cat-btn {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .cat-btn:hover {
+    background: #fff;
+    color: var(--color-primary);
+  }
+
+  .cat-btn.active {
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .news-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .news-item {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.75rem 2rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .news-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateX(3px);
+  }
+
+  .news-item.hidden { display: none; }
+
+  .news-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .news-item-meta time {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  .news-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.35;
+  }
+
+  .news-item p {
+    font-size: 0.93rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .news-link { font-weight: 600; color: var(--color-primary-light); }
+  .news-link:hover { color: var(--color-primary); }
+
+  .tag-grant { background: #edf5ee; color: #2a6030; }
+  .tag-pub { background: #f5e6e8; color: var(--color-primary); }
+
+  @media (max-width: 768px) {
+    .news-container { grid-template-columns: 1fr; }
+    .news-sidebar {
+      position: static;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .category-list { flex-direction: row; flex-wrap: wrap; }
+    .cat-btn { width: auto; }
+  }
+</style>
+
+<script>
+  const catBtns = document.querySelectorAll('.cat-btn');
+  const items = document.querySelectorAll('.news-item');
+
+  catBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      catBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cat = btn.getAttribute('data-cat');
+      items.forEach(item => {
+        if (cat === 'All' || item.getAttribute('data-cat') === cat) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

@@ -1,0 +1,547 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+function venueKey(venue: string, type: string): string {
+  if (type === 'Review') return 'Review';
+  return venue.replace(/\s+\d{4}$/, '');
+}
+
+const publications = [
+  {
+    year: 2026,
+    papers: [
+      {
+        title: 'Cross-linked pair of polymer chains under strong tension',
+        authors: 'G. Noh, P. Benetatos',
+        venue: 'Phys. Rev. E 2026',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1103/z47b-3zhg' },
+      },
+    ],
+  },
+  {
+    year: 2025,
+    papers: [
+      {
+        title: 'Elasticity of a freely jointed chain with quenched disorder',
+        authors: 'M. Yi, P. Benetatos',
+        venue: 'J. Stat. Mech. 2025',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1088/1742-5468/ade86b' },
+      },
+    ],
+  },
+  {
+    year: 2024,
+    papers: [
+      {
+        title: 'Bending elasticity of the reversible freely jointed chain',
+        authors: 'M. Yi, D. Lee, P. Benetatos',
+        venue: 'J. Chem. Phys. 2024',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1063/5.0246283' },
+      },
+      {
+        title: 'Stretching multistate flexible chains and loops',
+        authors: 'G. Noh, P. Benetatos',
+        venue: 'Phys. Rev. E 2024',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1103/physreve.110.014501' },
+      },
+      {
+        title: 'Variance and higher moments in the sigmoidal self-assembly of branched fibrils',
+        authors: 'M. Razbin, P. Benetatos',
+        venue: 'J. Chem. Phys. 2024',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1063/5.0190768' },
+      },
+    ],
+  },
+  {
+    year: 2023,
+    papers: [
+      {
+        title: 'Elasticity of a grafted rod-like filament with fluctuating bending stiffness',
+        authors: 'M. Razbin, P. Benetatos',
+        venue: 'Polymers 2023',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.3390/polym15102307' },
+      },
+    ],
+  },
+  {
+    year: 2022,
+    papers: [
+      {
+        title: 'Ensemble inequivalence and negative extensibility in a strongly stretched wormlike chain with fluctuating bending stiffness',
+        authors: 'P. Benetatos',
+        venue: 'J. Chem. Phys. 2022',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1063/5.0112552' },
+      },
+      {
+        title: 'Elasticity of Semiflexible ZigZag Nanosprings with a Point Magnetic Moment',
+        authors: 'M. Razbin, P. Benetatos',
+        venue: 'Polymers 2022',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.3390/polym15010044' },
+      },
+      {
+        title: 'Grafted Semiflexible Nunchucks with a Magnetic Bead Attached to the Free End',
+        authors: 'M. Razbin, P. Benetatos',
+        venue: 'Polymers 2022',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.3390/polym14040695' },
+      },
+    ],
+  },
+  {
+    year: 2021,
+    papers: [
+      {
+        title: 'Tensile elasticity of a freely jointed chain with reversible hinges',
+        authors: 'G. Noh, P. Benetatos',
+        venue: 'Soft Matter 2021',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1039/d1sm00053e' },
+      },
+      {
+        title: 'Orientational fluctuations and bimodality in semiflexible nunchucks',
+        authors: 'P. Benetatos, M. Razbin',
+        venue: 'Polymers 2021',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.3390/polym13122031' },
+      },
+    ],
+  },
+  {
+    year: 2020,
+    papers: [
+      {
+        title: 'Statistical ensemble inequivalence for flexible polymers under confinement in various geometries',
+        authors: 'S. Dutta, P. Benetatos',
+        venue: 'Soft Matter 2020',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1039/c9sm02246e' },
+      },
+      {
+        title: 'Directionality of growth and kinetics of branched fibril formation',
+        authors: 'M. Razbin, P. Benetatos, K. Mirabbaszadeh',
+        venue: 'J. Chem. Phys. 2020',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1063/5.0029142' },
+      },
+    ],
+  },
+  {
+    year: 2019,
+    papers: [
+      {
+        title: 'A first-passage approach to the thermal breakage of a discrete one-dimensional chain',
+        authors: 'M. Razbin, P. Benetatos, A. A. Moosavi-Movahedi',
+        venue: 'Soft Matter 2019',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1039/c8sm02421a' },
+      },
+    ],
+  },
+  {
+    year: 2018,
+    papers: [
+      {
+        title: 'Inequivalence of fixed-force and fixed-extension statistical ensembles for a flexible polymer tethered to a planar substrate',
+        authors: 'S. Dutta, P. Benetatos',
+        venue: 'Soft Matter 2018',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1039/c8sm01321g' },
+      },
+    ],
+  },
+  {
+    year: 2017,
+    papers: [
+      {
+        title: 'Tensile elasticity of semiflexible polymers with hinge defects',
+        authors: 'P. Benetatos',
+        venue: 'Phys. Rev. E 2017',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1103/PhysRevE.96.042502' },
+      },
+    ],
+  },
+  {
+    year: 2016,
+    papers: [
+      {
+        title: 'Bundling in semiflexible polymers: A theoretical overview',
+        authors: 'P. Benetatos, Y. S. Jho',
+        venue: 'Adv. Colloid Interface Sci. 2016',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1016/j.cis.2016.01.001' },
+      },
+      {
+        title: 'Elasticity of a semiflexible filament with a discontinuous tension due to a cross-link or a molecular motor',
+        authors: 'M. Razbin, P. Benetatos, A. Zippelius',
+        venue: 'Phys. Rev. E 2016',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1103/PhysRevE.93.052408' },
+      },
+      {
+        title: 'Bundle formation in parallel aligned polymers with competing interactions',
+        authors: 'S. Dutta, P. Benetatos, Y. S. Jho',
+        venue: 'EPL 2016',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1209/0295-5075/114/28001' },
+      },
+    ],
+  },
+  {
+    year: 2015,
+    papers: [
+      {
+        title: 'Mechanical properties of branched actin filaments',
+        authors: 'M. Razbin, M. Falcke, P. Benetatos, A. Zippelius',
+        venue: 'Phys. Biol. 2015',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1088/1478-3975/12/4/046007' },
+      },
+    ],
+  },
+  {
+    year: 2014,
+    papers: [
+      {
+        title: 'Tension-induced binding of semiflexible biopolymers',
+        authors: 'P. Benetatos, A. von der Heydt, A. Zippelius',
+        venue: 'New J. Phys. 2014',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1088/1367-2630/16/11/113037' },
+      },
+      {
+        title: 'Crosslink-induced shrinkage of grafted Gaussian chains',
+        authors: 'P. Benetatos',
+        venue: 'Phys. Rev. E 2014',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1103/PhysRevE.89.042602' },
+      },
+    ],
+  },
+  {
+    year: 2013,
+    papers: [
+      {
+        title: 'Bundling in brushes of directed and semiflexible polymers',
+        authors: 'P. Benetatos, E. M. Terentjev, A. Zippelius',
+        venue: 'Phys. Rev. E 2013',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1103/physreve.88.042601' },
+      },
+      {
+        title: 'Elasticity of cross-linked semiflexible biopolymers under tension',
+        authors: 'A. von der Heydt, D. Wilkin, P. Benetatos, A. Zippelius',
+        venue: 'Phys. Rev. E 2013',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1103/physreve.88.032701' },
+      },
+    ],
+  },
+  {
+    year: 2012,
+    papers: [
+      {
+        title: 'Force–extension relation of cross-linked anisotropic polymer networks',
+        authors: 'P. Benetatos, S. Ulrich, A. Zippelius',
+        venue: 'New J. Phys. 2012',
+        type: 'Journal',
+        links: { paper: 'https://doi.org/10.1088/1367-2630/14/11/115011' },
+      },
+    ],
+  },
+];
+
+const years = ['All', '2026', '2025', '2024', '2023', '2022', '2021', '2020 -'];
+const authors = ['All', 'G. Noh', 'M. Yi'];
+---
+
+<BaseLayout title="Publications" description="Soft Matter Theory Lab research publications in physics and soft matter journals.">
+  <div class="page-header">
+    <div class="container">
+      <h1>Publications</h1>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="filter-row">
+          <span class="filter-label">Year</span>
+          <div class="filter-btns" id="yearBtns">
+            {years.map((y, i) => (
+              <button class:list={['filter-btn', { active: i === 0 }]} data-year={y}>{y}</button>
+            ))}
+          </div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">Author</span>
+          <div class="filter-btns" id="authorBtns">
+            {authors.map((a, i) => (
+              <button class:list={['filter-btn', { active: i === 0 }]} data-author={a}>{a}</button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Publications by Year -->
+      {publications.map(group => (
+        <div class="pub-year-group">
+          <div class="year-label">
+            <span>{group.year}</span>
+          </div>
+          <div class="papers-list">
+            {group.papers.map(paper => (
+              <article class="paper-card" data-year={group.year} data-authors={paper.authors}>
+                <div class="paper-meta">
+                  <span class:list={['venue-badge', { 'journal-badge': paper.type === 'Journal' }]}>
+                    {paper.venue}
+                  </span>
+                  {paper.award && (
+                    <span class="award-badge">🏆 {paper.award}</span>
+                  )}
+                </div>
+                <h3 class="paper-title">{paper.title}</h3>
+                <p class="paper-authors">{paper.authors}</p>
+                <div class="paper-links">
+                  {paper.links.paper && <a href={paper.links.paper} class="paper-link" target="_blank" rel="noopener">📄 Paper</a>}
+                  {paper.links.code && <a href={paper.links.code} class="paper-link">💻 Code</a>}
+                  {paper.links.project && <a href={paper.links.project} class="paper-link">🌐 Project</a>}
+                  {paper.links.poster && <a href={paper.links.poster} class="paper-link">🖼 Poster</a>}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .filter-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--color-bg-alt);
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
+  }
+
+  .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .filter-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .filter-btn {
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    border: 1.5px solid var(--color-border);
+    background: #fff;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .filter-btn.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+  }
+
+  .pub-year-group {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    align-items: start;
+  }
+
+  .year-label {
+    position: sticky;
+    top: 88px;
+  }
+
+  .year-label span {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    opacity: 0.3;
+    line-height: 1;
+    padding-top: 0.5rem;
+  }
+
+  .papers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .paper-card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.75rem;
+    border-left: 4px solid var(--color-primary);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .paper-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateX(3px);
+  }
+
+  .paper-card.hidden { display: none; }
+
+  .paper-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .venue-badge {
+    display: inline-block;
+    background: #f5e6e8;
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+  }
+
+  .journal-badge {
+    background: #eeeeee;
+    color: #444;
+  }
+
+  .award-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #7a2020;
+    background: #fde8e8;
+    padding: 0.2rem 0.65rem;
+    border-radius: 4px;
+  }
+
+  .paper-title {
+    font-size: 1rem;
+    color: var(--color-primary);
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+  }
+
+  .paper-authors {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .paper-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .paper-link {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-primary-light);
+    text-decoration: none;
+    padding: 0.25rem 0.65rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .paper-link:hover {
+    border-color: var(--color-primary);
+    background: #f5e6e8;
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 640px) {
+    .pub-year-group {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .year-label { position: static; }
+    .year-label span { font-size: 1.1rem; opacity: 1; color: var(--color-accent); }
+  }
+</style>
+
+<script>
+  let activeYear = 'All';
+  let activeAuthor = 'All';
+
+  const papers = document.querySelectorAll<HTMLElement>('.paper-card');
+
+  function applyFilters() {
+    papers.forEach(paper => {
+      const year = paper.getAttribute('data-year') || '';
+      const authors = paper.getAttribute('data-authors') || '';
+      const yearMatch = activeYear === 'All' || (activeYear === '2020 -' ? Number(year) <= 2020 : year === activeYear);
+      const authorMatch = activeAuthor === 'All' || authors.includes(activeAuthor);
+      paper.classList.toggle('hidden', !(yearMatch && authorMatch));
+    });
+
+    document.querySelectorAll<HTMLElement>('.pub-year-group').forEach(group => {
+      const visible = group.querySelectorAll('.paper-card:not(.hidden)');
+      group.style.display = visible.length === 0 ? 'none' : '';
+    });
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('#yearBtns .filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#yearBtns .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeYear = btn.getAttribute('data-year') || 'All';
+      applyFilters();
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('#authorBtns .filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#authorBtns .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeAuthor = btn.getAttribute('data-author') || 'All';
+      applyFilters();
+    });
+  });
+</script>

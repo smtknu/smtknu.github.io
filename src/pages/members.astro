@@ -1,0 +1,421 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const director = {
+  name: 'Panayotis Benetatos',
+  title: 'Professor',
+  dept: 'Dept. of Physics, Kyungpook National University',
+  initials: 'PB',
+  email: 'pben@knu.ac.kr',
+  scholar: 'https://scholar.google.com/citations?user=cv89stMAAAAJ&hl=ko&oi=ao',
+  bio: 'Prof. Benetatos leads the Soft Matter Theory Lab at Kyungpook National University. His research focuses on the statistical mechanics and theoretical physics of soft matter systems, including polymers, liquid crystals, and biological materials.',
+  interests: ['Liquid Crystals', 'Polymer Theory', 'Active Matter'],
+};
+
+const currentYear = new Date().getFullYear();
+
+const phdStudents = [
+  { name: 'Geunho Noh', startYear: 2022, initials: 'GN', interests: ['TBA'], email: 'ngh@knu.ac.kr', photo: '', scholar: 'https://scholar.google.com/citations?user=cW9WpiwAAAAJ&hl=ko' },
+];
+
+const mastersStudents = [
+  { name: 'Minsu Yi', startYear: 2025, initials: 'MY', interests: ['Crosslinked Polymers'], email: 'alstn8588@knu.ac.kr', photo: '', scholar: 'https://scholar.google.com/citations?hl=ko&user=HKrRbN4AAAAJ' },
+  { name: 'Donghyeon Kim', startYear: 2026, initials: 'DK', interests: ['TBA'], email: 'kdh4471@knu.ac.kr', photo: '', scholar: '' },
+];
+
+const alumni: { name: string; degree: string; current: string }[] = [];
+---
+
+<BaseLayout title="Members" description="Meet the Soft Matter Theory Lab team — faculty, PhD and MS students, and alumni.">
+  <div class="page-header">
+    <div class="container">
+      <h1>Lab Members</h1>
+    </div>
+  </div>
+
+  <!-- Director -->
+  <section class="section" id="director">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Faculty</span>
+        <h2>Principal Investigator</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="director-card">
+        <div class="director-avatar">
+          <img src="/panb_photo_0526.jpg" alt="Prof. Panayotis Benetatos" />
+        </div>
+        <div class="director-details">
+          <h3>Prof. {director.name}</h3>
+          <p class="role">{director.title} · {director.dept}</p>
+          <a href={`mailto:${director.email}`} class="member-email">{director.email}</a>
+          <div class="member-links">
+            <a href={director.scholar} target="_blank" rel="noopener" class="btn btn-primary">Google Scholar</a>
+          </div>
+          <ul class="director-career">
+            <li><span class="career-year">2023 – present</span><span>Professor, Kyungpook National University, Korea</span></li>
+            <li><span class="career-year">2018 – 2023</span><span>Associate Professor, Kyungpook National University, Korea</span></li>
+            <li><span class="career-year">2012 – 2018</span><span>Assistant Professor, Kyungpook National University, Korea</span></li>
+            <li><span class="career-year">2009 – 2012</span><span>Research Associate, TCM Group, Cavendish Laboratory, University of Cambridge, UK</span></li>
+            <li><span class="career-year">2005 – 2009</span><span>Research Associate, Georg-August University Göttingen, Germany</span></li>
+            <li><span class="career-year">2001 – 2005</span><span>Research Associate, Hahn-Meitner-Institut, Berlin, Germany</span></li>
+            <li><span class="career-year">Ph.D. 2000</span><span>Syracuse University, Syracuse, NY, USA</span></li>
+            <li><span class="career-year">Sc.M. 1995</span><span>Brown University, Providence, RI, USA</span></li>
+            <li><span class="career-year">B.Sc. 1993</span><span>National and Kapodistrian University of Athens, Greece</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PhD Students -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Graduate Students</span>
+        <h2>PhD Students</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="members-grid">
+        {phdStudents.map(s => (
+          <div class="member-card card">
+            <div class="member-avatar">
+              {s.photo ? <img src={s.photo} alt={s.name} /> : s.initials}
+            </div>
+            <div class="member-info">
+              <h3>{s.name}</h3>
+              <p class="member-role">PhD Student</p>
+              <a href={`mailto:${s.email}`} class="member-email">{s.email}</a>
+              <div class="member-links">
+                <a href={s.scholar || '#'} target="_blank" rel="noopener" class="btn btn-primary">Google Scholar</a>
+                <a href="#" class="btn btn-outline">CV</a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Master's Students -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Graduate Students</span>
+        <h2>Master's Students</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="members-grid">
+        {mastersStudents.map(s => (
+          <div class="member-card card">
+            <div class="member-avatar ms-avatar">
+              {s.photo ? <img src={s.photo} alt={s.name} /> : s.initials}
+            </div>
+            <div class="member-info">
+              <h3>{s.name}</h3>
+              <p class="member-role">MS Student</p>
+              <a href={`mailto:${s.email}`} class="member-email">{s.email}</a>
+              <div class="member-links">
+                <a href={s.scholar || '#'} target="_blank" rel="noopener" class="btn btn-primary">Google Scholar</a>
+                <a href="#" class="btn btn-outline">CV</a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Alumni -->
+  {alumni.length > 0 && (
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Former Members</span>
+        <h2>Alumni</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="alumni-grid">
+        {alumni.map(a => (
+          <div class="alumni-card card">
+            <div class="alumni-initials">{a.name.split(' ').map((n: string) => n[0]).join('')}</div>
+            <div>
+              <h4>{a.name}</h4>
+              <p class="alumni-degree">{a.degree}</p>
+              <p class="alumni-current">{a.current}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  )}
+
+</BaseLayout>
+
+<style>
+  .director-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2.5rem;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .director-avatar {
+    width: 156px;
+    height: 192px;
+    border-radius: 16px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .director-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .director-details h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .role {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .bio {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+  }
+
+  .interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .director-career {
+    list-style: none;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .director-career li {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+  }
+
+  .career-year {
+    font-weight: 700;
+    color: var(--color-primary);
+    flex-shrink: 0;
+    width: 120px;
+  }
+
+  .member-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .member-card .member-links .btn {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  .members-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+  }
+
+  .member-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.75rem;
+    width: 480px;
+    max-width: 100%;
+    padding: 2.5rem;
+  }
+
+  .member-avatar {
+    width: 156px;
+    height: 192px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    color: #fff;
+    font-size: 1.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .ms-avatar {
+    background: linear-gradient(135deg, #a00d24, #c8102e);
+  }
+
+  .member-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .member-avatar:has(img) {
+    background: none;
+  }
+
+  .member-info h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .member-role {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .member-email {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    display: block;
+    margin-bottom: 0;
+  }
+
+  .alumni-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  .alumni-card {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .alumni-initials {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-bg-alt);
+    border: 2px solid var(--color-border);
+    color: var(--color-primary);
+    font-size: 0.9rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .alumni-card h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .alumni-degree {
+    font-size: 0.8rem;
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+  }
+
+  .alumni-current {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .join-section { background: var(--color-bg-dark); }
+
+  .join-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .join-text .section-label { color: var(--color-accent); }
+  .join-text h2 { color: #fff; margin-bottom: 0.75rem; }
+  .join-text p { color: rgba(255,255,255,0.7); margin-bottom: 1rem; }
+
+  .join-list {
+    list-style: none;
+    margin-bottom: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .join-list li {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.95rem;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .join-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+  }
+
+  .join-decoration {
+    position: relative;
+    width: 200px;
+    height: 200px;
+  }
+
+  .join-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.1);
+  }
+
+  .c1 { width: 180px; height: 180px; top: 10px; left: 10px; }
+  .c2 { width: 120px; height: 120px; top: 40px; left: 40px; background: rgba(200, 16, 46, 0.15); }
+  .c3 { width: 60px; height: 60px; top: 70px; left: 70px; background: var(--color-accent); opacity: 0.3; }
+
+  @media (max-width: 768px) {
+    .director-card { grid-template-columns: 1fr; text-align: center; }
+    .director-avatar { margin: 0 auto; }
+    .interests, .member-links { justify-content: center; }
+    .join-card { grid-template-columns: 1fr; }
+    .join-decoration { display: none; }
+  }
+</style>

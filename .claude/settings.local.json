@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem C:\\\\site -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object FullName)",
+      "WebFetch(domain:knu.ac.kr)",
+      "WebFetch(domain:www.knu.ac.kr)",
+      "Bash(magick --version)",
+      "Bash(convert --version)",
+      "PowerShell(python3 --version 2>$null; node --version 2>$null)",
+      "WebFetch(domain:scholar.google.com)",
+      "WebFetch(domain:api.crossref.org)",
+      "WebFetch(domain:home.knu.ac.kr)"
+    ]
+  }
+}

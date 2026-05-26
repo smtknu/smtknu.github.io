@@ -1,0 +1,34 @@
+name: Update Publications
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # 매일 UTC 02:00 (KST 11:00)
+  workflow_dispatch:        # 수동 실행 허용
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run publications update script
+        run: node scripts/update-publications.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/pages/publications.astro
+          git diff --staged --quiet && echo "No changes." || (
+            git commit -m "chore: auto-update publications from CrossRef" &&
+            git push
+          )
